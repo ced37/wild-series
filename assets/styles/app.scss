@@ -1,0 +1,16 @@
+body {
+    background-color: lightgray;
+}
+
+@import "~bootstrap/scss/bootstrap";
+
+$themes-colors: (
+    "primary": #033649,
+    "secondary": #036564,
+    "tertiary": #CDB380
+);
+
+.navbar a {
+    text-decoration: none;
+    color:#033649;
+}
