@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Program;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -13,25 +14,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
-
-* @Route("/programs", name="program_")
-
-*/
+ 
+ * @Route("/programs", name="program_")
+ */
 class ProgramController extends AbstractController
 
 {
     /**
-
-      * Correspond à la route /programs/ et au name "program_index"
-
+      * Show all rows from Program's entity
+      *
       * @Route("/", name="index")
-
+      * @return Response A response instance
       */
     public function index(): Response
     {
-        return $this->render('program/index.html.twig', [
-            'website' => 'Wild Séries',
-         ]);
+        $programs = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findAll();
+
+        return $this->render(
+            'program/index.html.twig', ['programs' => $programs]);
     }
 
     /**
