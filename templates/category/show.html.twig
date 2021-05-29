@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}All programs in category
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% if programs %}
+            <h1> {{ programs.0.category.name }}</h1> <h2>Les 3 dernières séries :</h2>
+            {% for program in programs %}
+                <div class="m-5">
+                    <h2>{{ program.id }}
+                        /
+                        <a href="{{ path("program_show", { id: program.id }) }}">{{ program.title }}</a>
+                    </h2>
+                    <p>{{ program.summary }}</p>
+                </div>
+            {% else %}
+                Aucune série trouvée.
+            {% endfor %}
+        {% endif %}
+
+        <a href="{{ path('category_index') }}" class="flex d-flex justify-content-end">
+            Retour à la liste des catégories
+        </a>
+    </div>
+{% endblock %}
+
+
