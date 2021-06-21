@@ -21,12 +21,12 @@
   </div>
 
 </div>
-  <h2>Saisons</h2>
+{% for episode in episodes %}
     <ul>
-  {% for season in seasons %}
-    <a href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}"><li>{{ season.description }}</li></a>
-  {% endfor %}
+        <li>Titre : {{ episode.title }}</li>
+        <li>Synopsis : {{ episode.synopsis }}</li>
     </ul>
+{% endfor  %}
 
 <a href="{{ path('program_index') }}">Retour à la liste des programmes</a>
 

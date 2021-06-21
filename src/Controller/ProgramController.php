@@ -5,11 +5,11 @@
 namespace App\Controller;
 
 use App\Entity\Program;
-
+use App\Entity\Season;
+use App\Entity\Episode;
+use App\Repository\SeasonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -42,20 +42,45 @@ class ProgramController extends AbstractController
      * @Route("/show/{id<^[0-9]+$>}", name="show")
      * @return Response
      */
-    public function show(int $id): Response
+    public function show(Program $program, SeasonRepository $seasonRepository): Response
     {
-        $program = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findOneBy(['id' => $id]);
+        $seasons = $seasonRepository->findby(['program' => $program]);
 
         if (!$program) {
 
             throw $this->createNotFoundException(
-                'No program with id : '.$id.' found in program\'s table.'
+                'No program with id : '.$program.' found in program\'s table.'
             );
         }
-        return $this->render('program/show.html.twig', ['program' => $program]);
+        return $this->render('program/show.html.twig', ['program' => $program, 'seasons' => $seasons]);
     }
 
+    /**
+     * Getting a season by id
 
+     * @Route("/{programId}/seasons/{seasonId}", name="season_show")
+     * @return Response
+     */
+    public function showSeason(int $programId, int $seasonId): Response
+    {
+        $program = $this->getDoctrine()
+        ->getRepository(Program::class)
+        ->find($programId);
+
+        $season = $this->getDoctrine()
+        ->getRepository(Season::class)
+        ->find($seasonId);
+
+        $episodes = $this->getDoctrine()
+        ->getRepository(Episode::class)
+        ->findby([
+            'season' => $seasonId
+        ]);
+
+        return $this->render('program/season_show.html.twig', [
+            'program' => $program,
+            'season' => $season,
+            'episodes' => $episodes
+        ]);
+    }
 }
