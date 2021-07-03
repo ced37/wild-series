@@ -52,12 +52,12 @@ class CategoryController extends AbstractController
                 "No category"
             );
         }
-        $programs = $this->getDoctrine()
+        $program = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findBy(['category' => $category->getId()], ['id' => 'DESC'], 3);
                  return $this->render('category/show.html.twig', [
                 'category' => $category,
-                'programs' => $programs,
+                'programs' => $program,
             ]);
     }
 

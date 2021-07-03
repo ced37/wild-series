@@ -39,7 +39,7 @@ class ProgramController extends AbstractController
     /**
      * Getting a program by id
 
-     * @Route("/show/{id<^[0-9]+$>}", name="show")
+     * @Route("/show/{id}", name="show")
      * @return Response
      */
     public function show(Program $program, SeasonRepository $seasonRepository): Response
@@ -61,7 +61,7 @@ class ProgramController extends AbstractController
      * @Route("/{programId}/seasons/{seasonId}", name="season_show")
      * @return Response
      */
-    public function showSeason(int $programId, int $seasonId): Response
+    public function showSeason(Program $programId, Season $seasonId): Response
     {
         $program = $this->getDoctrine()
         ->getRepository(Program::class)
@@ -73,14 +73,39 @@ class ProgramController extends AbstractController
 
         $episodes = $this->getDoctrine()
         ->getRepository(Episode::class)
-        ->findby([
-            'season' => $seasonId
-        ]);
+        ->findAll();
 
         return $this->render('program/season_show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episodes' => $episodes
         ]);
+    }
+
+    /**
+     * Getting a episode by id
+
+     * @Route("/{programId}/seasons/{seasonId}/episodes/{episodeId}", name="episode_show")
+     * @return Response
+     */
+    public function showEpisode(Program $programId, Season $seasonId, Episode $episodeId): Response
+    {
+        $program = $this->getDoctrine()
+        ->getRepository(Program::class)
+        ->find($programId);
+
+        $season = $this->getDoctrine()
+        ->getRepository(Season::class)
+        ->find($seasonId);
+
+        $episode = $this->getDoctrine()
+        ->getRepository(Episode::class)
+        ->find($episodeId);
+
+        return $this->render('program/episode_show.html.twig', [
+            'program' => $program,
+            'season' => $season,
+            'episodes' => $episode,
+          ]);
     }
 }
