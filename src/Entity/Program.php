@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ProgramRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProgramRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProgramRepository")
@@ -21,11 +24,14 @@ class Program
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $summary;
 
@@ -44,6 +50,19 @@ class Program
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program", orphanRemoval=true)
      */
     private $seasons;
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addConstraint(new UniqueEntity([
+            'fields' => 'title',
+            'message' => 'ce titre existe déjà',
+        ]))
+                ->addPropertyConstraint('summary', new Assert\Regex([
+                    'pattern' => '/plus belle la vie/',
+                    'match' => false,
+                    'message' => 'On parle de vrai séries ici',
+                ]));
+    }
 
     public function __construct()
     {
