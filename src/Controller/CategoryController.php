@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- 
  * @Route("/categories", name="category_")
  */
 class CategoryController extends AbstractController
@@ -65,7 +64,6 @@ class CategoryController extends AbstractController
     }
 
     /**
-
      * @Route("/{categoryName}", name="show")
      * @return Response
      */

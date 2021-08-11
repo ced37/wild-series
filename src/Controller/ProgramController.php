@@ -71,7 +71,6 @@ class ProgramController extends AbstractController
 
     /**
      * Getting a program by id
-
      * @Route("/show/{id}", name="show")
      * @return Response
      */
@@ -90,7 +89,6 @@ class ProgramController extends AbstractController
 
     /**
      * Getting a season by id
-
      * @Route("/{programId}/seasons/{seasonId}", name="season_show")
      * @return Response
      */
@@ -117,7 +115,6 @@ class ProgramController extends AbstractController
 
     /**
      * Getting a episode by id
-
      * @Route("/{programId}/seasons/{seasonId}/episodes/{episodeId}", name="episode_show")
      * @return Response
      */
