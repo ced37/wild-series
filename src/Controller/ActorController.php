@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Actor;
+use App\Entity\Program;
 use App\Repository\ActorRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +19,7 @@ class ActorController extends AbstractController
      */
     public function index(ActorRepository $actorRepository): Response
     {
-        return $this->render('actor/show.html.twig', [
+        return $this->render('actor/index.html.twig', [
             'actors' => $actorRepository->findAll(),
         ]);
     }
@@ -26,10 +27,11 @@ class ActorController extends AbstractController
     /**
      * @Route("/{id}", name="show", methods={"GET"})
      */
-    public function show(Actor $actor): Response
+    public function show(Actor $actor, Program $program): Response
     {
         return $this->render('actor/show.html.twig', [
-            'actors' => $actor,
+            'actor' => $actor,
+            'program' => $program
         ]);
     }
 }

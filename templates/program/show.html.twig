@@ -34,7 +34,7 @@
 
       {% for actor in program.actors %}
 
-          <a href="{{ path('actor_index', {program_id: program.id, actor_id: actor.id}) }}"><li>{{ actor.name }} </li></a>
+          <a href="{{ path('actor_show', {'id': program.id, 'id': actor.id}) }}"><li>{{ actor.name }} </li></a>
 
       {% else %}
 

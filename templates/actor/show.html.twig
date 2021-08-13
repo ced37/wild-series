@@ -4,8 +4,13 @@
 
 {% block body %}
     <h1>Acteur</h1>
-    {% for actor in actors %}
-        <p>{{ actor.id }}</p>
-        <p>{{ actor.name }}</p>
+    
+    
+        <p>{{ actor.id }} {{ actor.name }}</p>
+
+    <h2>Série associé<h2>
+    {% for program in actor.programs %}
+
+        <a href="{{ path('program_show', {'id': program.id}) }}"><p>{{ program.title }}</p></a>
     {% endfor %}
 {% endblock %}
