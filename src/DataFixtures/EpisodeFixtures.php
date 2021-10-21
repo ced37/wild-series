@@ -2,24 +2,22 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Season;
+use App\Entity\Episode;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class SeasonFixtures extends Fixture implements DependentFixtureInterface
+class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i <= 50; $i++) {
-            $season = new Season();
-            $season->setDescription('Season : '.rand(0, 5));
-            $season->setYear(rand(2009, 2020));
-            $season->setNumber(rand(0, 5));
-            $this->addReference('season_' . $i, $season);
-            $season->setProgram($this->getReference('program_'.rand(0, 5)));
-            $manager->persist($season);
+        for ($i = 0; $i <= 150; $i++) {
+            $episode = new Episode();
+            $episode->setSeason($this->getReference('season_' . rand(0, 50)));
+            $episode->setTitle('Super épisode !');
+            $episode->setNumber(rand(0, 5));
+            $episode->setSynopsis('Voir les résumés sur internet...');
+            $manager->persist($episode);
         }
         $manager->flush();
     }
@@ -31,6 +29,7 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
           ActorFixtures::class,
           CategoryFixtures::class,
           ProgramFixtures::class,
+          SeasonFixtures::class,
         ];
     }
 }
